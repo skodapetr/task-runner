@@ -1,0 +1,9 @@
+{
+  "id": "task-001",
+  "created": "2020-03-01T23:59:11",
+  "lastChange": "2020-03-01T23:59:11",
+  "status": "queued",
+  "lastFinishedStep": 0,
+  "stepCount": 4,
+  "template": "add-integer"
+}

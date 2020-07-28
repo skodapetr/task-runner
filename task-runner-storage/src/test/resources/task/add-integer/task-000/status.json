@@ -1,0 +1,10 @@
+{
+  "id": "task-000",
+  "created": "2020-03-01T23:59:11",
+  "lastChange": "2020-03-01T23:59:11",
+  "status": "queued",
+  "lastFinishedStep": 0,
+  "stepCount": 3,
+  "template": "add-integer",
+  "pid": 1234
+}

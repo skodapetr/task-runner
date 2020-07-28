@@ -1,0 +1,15 @@
+{
+  "id": "add-integer",
+  "urlPath": "add-integer",
+  "version": 1,
+  "steps": [
+    {
+      "name": "echo",
+      "command": "echo ${left}"
+    },
+    {
+      "name": "echo",
+      "command": "echo ${right}"
+    }
+  ]
+}

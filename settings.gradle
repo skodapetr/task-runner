@@ -1,0 +1,6 @@
+rootProject.name = "Task Runner"
+
+include "task-runner-storage",
+        "task-runner-executor",
+        "task-runner-http",
+        "task-runner-cli"

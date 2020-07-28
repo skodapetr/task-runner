@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+}
+
+java {
+    jar {
+        archiveAppendix.set('storage')
+        dependencies {
+            implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.28'
+            implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.3'
+            implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.10.3'
+        }
+    }
+}

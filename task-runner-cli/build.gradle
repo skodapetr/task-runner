@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+java {
+    jar {
+        archiveAppendix.set('cli')
+        dependencies {
+            implementation project(":task-runner-executor")
+            implementation project(":task-runner-http")
+            implementation project(":task-runner-storage")
+            implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.28'
+            implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+            implementation group: 'ch.qos.logback.contrib', name: 'logback-json-classic', version: '0.1.5'
+            implementation group: 'ch.qos.logback.contrib', name: 'logback-jackson', version: '0.1.5'
+            implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.3'
+            implementation group: 'commons-cli', name: 'commons-cli', version: '1.4'
+        }
+    }
+}
+
+application {
+    mainClassName = 'cz.skodape.taskrunner.cli.AppEntry'
+}
+
+installDist {
+    into "${project.rootDir}/dist"
+}

@@ -1,0 +1,11 @@
+
+# Directories
+.idea
+.gradle
+build/
+example/
+dist/
+
+# Files
+*.iml
+*.class

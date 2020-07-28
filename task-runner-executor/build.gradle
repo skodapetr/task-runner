@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+}
+
+java {
+    jar {
+        archiveAppendix.set('executor')
+        dependencies {
+            implementation project(":task-runner-storage")
+            implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.28'
+            implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
+        }
+    }
+}

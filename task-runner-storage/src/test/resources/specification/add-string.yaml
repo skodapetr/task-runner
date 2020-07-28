@@ -1,0 +1,12 @@
+template:
+  id: "add-string"
+  urlPath: "add-string"
+  version: 1
+  allowInputFiles: true
+  createOnGet: true
+  mergeErrOutToStdOut: true
+  steps:
+    - name: "echo"
+      command: 'echo "${left}"'
+    - name: "echo"
+      command: 'echo "${right}"'

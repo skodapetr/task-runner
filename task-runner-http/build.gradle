@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+}
+
+java {
+    jar {
+        archiveAppendix.set('http')
+        dependencies {
+            implementation project(":task-runner-storage")
+            implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.28'
+            // Jetty
+            implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.27.v20200227'
+            implementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.4.27.v20200227'
+            // API and interface of javax.ws.rs
+            implementation group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.0.1'
+            implementation group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: '2.30.1'
+            implementation group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '2.30.1'
+            // Support of media types
+            //implementation group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.30.1'
+            implementation group: 'org.glassfish.jersey.media', name: 'jersey-media-multipart', version: '2.30.1'
+            // JAX-B dependencies for JDK 9+
+            implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
+            implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
+            //
+            implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.3'
+            implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.10.3'
+        }
+    }
+}
