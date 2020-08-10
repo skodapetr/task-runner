@@ -27,8 +27,10 @@ public class TaskTemplateJacksonAdapter {
             specification.newLocationHttpTemplate =
                     node.get("newLocationHttpTemplate").asText();
         }
-        for (JsonNode stepNode : node.get("steps")) {
-            specification.steps.add(asTaskStep(stepNode));
+        if (node.has("steps")) {
+            for (JsonNode stepNode : node.get("steps")) {
+                specification.steps.add(asTaskStep(stepNode));
+            }
         }
         return specification;
     }
