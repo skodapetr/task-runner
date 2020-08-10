@@ -41,7 +41,7 @@ public class TaskTemplate {
      * Template used by HTTP service to create response Location
      * header.
      */
-    public String newLocationHttpTemplate = "./{template}/{task}";
+    public String newLocationHttpTemplate = null;
 
     public List<TaskStep> steps = new ArrayList<>();
 

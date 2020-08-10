@@ -66,7 +66,6 @@ public class TaskRestApi extends Application {
     }
 
     @GET
-    @Path("/")
     public Response getAll() {
         ObjectNode root = objectMapper.createObjectNode();
         root.set("data", asArrayNode(taskStorage.getTasks()));
@@ -129,7 +128,6 @@ public class TaskRestApi extends Application {
         TaskTemplate template = templateStorage.getTemplate(
                 reference.getTemplate());
         String uriAsString = template.newLocationHttpTemplate
-                .replace("{template}", reference.getTemplate())
                 .replace("{task}", reference.getId());
         return URI.create(uriAsString);
     }
