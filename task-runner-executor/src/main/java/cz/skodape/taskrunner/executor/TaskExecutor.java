@@ -83,7 +83,7 @@ public class TaskExecutor implements Runnable {
     private boolean executeCommands(List<String> commands)
             throws StorageException {
         for (int index = 0; index < commands.size(); ++index) {
-            String name = template.steps.get(0).name;
+            String name = template.steps.get(index).name;
             String command = commands.get(index);
             LOG.info("Executing command {}/{} : {}",
                     index + 1, commands.size(), name);
@@ -135,7 +135,7 @@ public class TaskExecutor implements Runnable {
         if (SystemUtils.IS_OS_WINDOWS) {
             processBuilder.command("cmd.exe", "/c", command);
         } else {
-            processBuilder.command(command);
+            processBuilder.command("sh", "-c", command);
         }
     }
 
