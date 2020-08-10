@@ -9,8 +9,8 @@ java {
             implementation project(":task-runner-storage")
             implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.28'
             // Jetty
-            implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.27.v20200227'
-            implementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.4.27.v20200227'
+            implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.31.v20200723'
+            implementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.4.31.v20200723'
             // API and interface of javax.ws.rs
             implementation group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.0.1'
             implementation group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: '2.30.1'
