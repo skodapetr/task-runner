@@ -6,9 +6,12 @@ import cz.skodape.taskrunner.storage.instance.TaskReference;
 import cz.skodape.taskrunner.storage.instance.WritableTaskStorage;
 import cz.skodape.taskrunner.storage.template.TaskTemplateStorage;
 import cz.skodape.taskrunner.storage.template.model.TaskTemplate;
+import org.eclipse.jetty.security.LoginService;
 import org.glassfish.jersey.media.multipart.BodyPartEntity;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -22,6 +25,9 @@ import java.util.function.Function;
  * Handles task creation.
  */
 class CreateTaskAction {
+
+    private static final Logger LOG =
+            LoggerFactory.getLogger(CreateTaskAction.class);
 
     private final static String FILE_PART_NAME = "input";
 
@@ -54,6 +60,7 @@ class CreateTaskAction {
             addFiles(builder, template, files);
             reference = builder.build();
         } catch (StorageException ex) {
+            LOG.info("Can't create task.", ex);
             builder.clear();
             return serverError();
         }
@@ -69,6 +76,7 @@ class CreateTaskAction {
             try {
                 return TaskBuilder.create(taskStorage, template);
             } catch (StorageException ex) {
+                LOG.info("Can't create new builder.", ex);
                 return null;
             }
         } else {
