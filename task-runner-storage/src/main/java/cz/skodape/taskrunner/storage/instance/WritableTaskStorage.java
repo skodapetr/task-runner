@@ -5,6 +5,8 @@ import cz.skodape.taskrunner.storage.instance.model.TaskConfigurationJacksonAdap
 import cz.skodape.taskrunner.storage.instance.model.TaskInstance;
 import cz.skodape.taskrunner.storage.StorageException;
 import cz.skodape.taskrunner.storage.instance.model.TaskInstanceJacksonAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,6 +47,9 @@ public class WritableTaskStorage extends DirectoryTaskStorage {
 
     }
 
+    private static final Logger LOG =
+            LoggerFactory.getLogger(WritableTaskStorage.class);
+
     private final File workingDirectory;
 
     public WritableTaskStorage(File dataDirectory, File workingDirectory) {
@@ -55,14 +60,15 @@ public class WritableTaskStorage extends DirectoryTaskStorage {
     public NewTaskData reserveNewTask(String template)
             throws StorageException {
         getNewTaskDirectory().mkdirs();
-        File taskDirectory = createNewTaskDirectory();
+        File taskDirectory = createNewTaskDirectory(template);
         return new NewTaskData(
                 TaskReference.create(template, taskDirectory.getName()),
                 taskDirectory);
     }
 
 
-    private File createNewTaskDirectory() throws StorageException {
+    private File createNewTaskDirectory(String template)
+            throws StorageException {
         for (int i = 0; i < NUMBER_OF_RETRY_FOR_CREATE; ++i) {
             UUID uuid = UUID.randomUUID();
             String name = uuid.toString();
@@ -70,7 +76,7 @@ public class WritableTaskStorage extends DirectoryTaskStorage {
             if (!file.mkdirs()) {
                 continue;
             }
-            if (isFileUsed(name)) {
+            if (isFileUsed(template, name)) {
                 file.delete();
                 continue;
             }
@@ -79,13 +85,8 @@ public class WritableTaskStorage extends DirectoryTaskStorage {
         throw new StorageException("Can't create storage directory");
     }
 
-    private boolean isFileUsed(String name) {
-        for (String template : getTemplates()) {
-            if (getTaskDirectory(template, name).exists()) {
-                return true;
-            }
-        }
-        return false;
+    private boolean isFileUsed(String template, String name) {
+        return getTaskDirectory(template, name).exists();
     }
 
     private File getNewTaskDirectory() {
@@ -96,11 +97,17 @@ public class WritableTaskStorage extends DirectoryTaskStorage {
      * Return null if the task already exist.
      */
     public NewTaskData reserveNewTaskForName(String template, String name) {
-        File file = new File(getNewTaskDirectory(), template + "-" + name);
+        String fileName = template + "-" + name;
+        File file = new File(getNewTaskDirectory(), fileName);
         if (!file.mkdirs()) {
+            LOG.info("Can't create working directory for '{}'", fileName);
             return null;
         }
-        if (isFileUsed(name)) {
+        if (isFileUsed(template, name)) {
+            LOG.info(
+                    "Can't reserve task name '{}' as it is already used.",
+                    fileName
+            );
             file.delete();
             return null;
         }
