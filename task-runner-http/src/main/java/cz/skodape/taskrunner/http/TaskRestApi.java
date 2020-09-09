@@ -9,6 +9,7 @@ import cz.skodape.taskrunner.storage.instance.WritableTaskStorage;
 import cz.skodape.taskrunner.storage.instance.model.TaskInstance;
 import cz.skodape.taskrunner.storage.template.TaskTemplateStorage;
 import cz.skodape.taskrunner.storage.template.model.TaskTemplate;
+import org.apache.tika.Tika;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
@@ -50,6 +51,8 @@ public class TaskRestApi extends Application {
     private final TaskTemplateStorage templateStorage;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
+
+    private Tika tika = new Tika();
 
     static {
         dataFormat = new DateTimeFormatterBuilder()
@@ -221,15 +224,23 @@ public class TaskRestApi extends Application {
     }
 
     private Response streamFile(File file) {
+
         if (file.exists()) {
-            return Response.ok((StreamingOutput) (output) -> {
-                try (InputStream stream = new FileInputStream(file)) {
-                    stream.transferTo(output);
-                }
-            }).build();
+            return Response
+                    .ok((StreamingOutput) (output) -> {
+                        try (InputStream stream = new FileInputStream(file)) {
+                            stream.transferTo(output);
+                        }
+                    })
+                    .header("Content-Type", getContentType(file))
+                    .build();
         } else {
             return notFound();
         }
+    }
+
+    private String getContentType(File file) {
+        return tika.detect(file.toString());
     }
 
     @GET
