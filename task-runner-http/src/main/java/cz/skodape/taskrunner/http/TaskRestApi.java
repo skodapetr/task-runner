@@ -150,8 +150,16 @@ public class TaskRestApi extends Application {
     }
 
     @GET
+    @Path("/{template}/{id}/status.json")
+    public Response getTaskStatus(
+            @PathParam("template") String templatePath,
+            @PathParam("id") String taskId) {
+        return this.getTask(templatePath, taskId);
+    }
+
+    @GET
     @Path("/{template}/{id}")
-    public Response getStatus(
+    public Response getTask(
             @PathParam("template") String templatePath,
             @PathParam("id") String taskId) {
         TaskTemplate template = templateStorage.getTemplateByPath(templatePath);
