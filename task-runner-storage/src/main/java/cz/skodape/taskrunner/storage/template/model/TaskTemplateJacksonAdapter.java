@@ -32,10 +32,16 @@ public class TaskTemplateJacksonAdapter {
                 specification.steps.add(asTaskStep(stepNode));
             }
         }
+        if (node.has("taskGetIdentificationTransformation")) {
+            String value = node.get("taskGetIdentificationTransformation")
+                    .textValue();
+            specification.taskGetIdentificationTransformation =
+                    StringTransformation.fromString(value);
+        }
         return specification;
     }
 
-    public static TaskStep asTaskStep(JsonNode node) {
+    protected static TaskStep asTaskStep(JsonNode node) {
         TaskStep step = new TaskStep();
         step.name = node.get("name").textValue();
         step.command = node.get("command").textValue();

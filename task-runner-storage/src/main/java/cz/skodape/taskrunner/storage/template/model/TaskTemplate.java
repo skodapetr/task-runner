@@ -43,6 +43,13 @@ public class TaskTemplate {
      */
     public String newLocationHttpTemplate = null;
 
+    /**
+     * Normalize task identification created using HTTP GET interface, does
+     * not apply to other requests.
+     */
+    public StringTransformation taskGetIdentificationTransformation
+            = StringTransformation.None;
+
     public List<TaskStep> steps = new ArrayList<>();
 
 }

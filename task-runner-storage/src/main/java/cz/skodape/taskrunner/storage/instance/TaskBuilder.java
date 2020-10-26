@@ -84,7 +84,9 @@ public class TaskBuilder {
 
     public static TaskBuilder createForName(
             WritableTaskStorage storage, TaskTemplate template, String name) {
-        var instance = storage.reserveNewTaskForName(template.id, name);
+        String normalizedName =
+                template.taskGetIdentificationTransformation.transform(name);
+        var instance = storage.reserveNewTaskForName(template.id, normalizedName);
         if (instance == null) {
             return null;
         }
