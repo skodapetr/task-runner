@@ -31,4 +31,10 @@ public class AppConfiguration {
      */
     public Integer httpPort = 8050;
 
+    /**
+     * If true upon start re-queue all running task, use this option
+     * only when there is exactly one instance of task-runner running at a time.
+     */
+    public boolean restartRunningTasks = false;
+
 }

@@ -75,6 +75,13 @@ public class AppEntry {
                 .required(false)
                 .build());
 
+        options.addOption(Option.builder()
+                .longOpt("RestartTasks")
+                .hasArg(false)
+                .desc("Re-queue all running tasks.")
+                .required(false)
+                .build());
+
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
         try {
@@ -111,6 +118,9 @@ public class AppEntry {
         if (cmd.hasOption("HttpPort")) {
             configuration.httpPort =
                     Integer.parseInt(cmd.getOptionValue("HttpPort"));
+        }
+        if (cmd.hasOption("RestartTasks")) {
+            configuration.restartRunningTasks = true;
         }
         return configuration;
     }

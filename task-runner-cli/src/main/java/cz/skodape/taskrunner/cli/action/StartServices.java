@@ -32,7 +32,6 @@ public class StartServices {
 
     public void execute() {
         initializeStorage();
-        // TODO Do initial clean up if needed.
         try {
             startExecutorService();
             startHttpService();
@@ -49,6 +48,9 @@ public class StartServices {
                 configuration.taskDirectory, configuration.workingDirectory);
         templateStorage = new TaskTemplateStorage();
         templateStorage.load(configuration.templateDirectory);
+        if (configuration.restartRunningTasks) {
+            (new PrepareStorage(taskStorage,templateStorage)).prepare();
+        }
     }
 
     private void startExecutorService() throws IOException {
