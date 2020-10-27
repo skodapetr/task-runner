@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/skodapetr/task-runner/master/documentation/instance-schema.json",
+  "title": "Task Runner Instance",
+  "type": "object",
+  "required": [
+    "id",
+    "status",
+    "created",
+    "lastChange",
+    "lastFinishedStep",
+    "stepCount",
+    "template"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Task identification."
+    },
+    "created": {
+      "type": "date-time",
+      "description": "When the task was created."
+    },
+    "lastChange": {
+      "type": "date-time",
+      "description": "When the task was changed for the last time."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "running",
+        "failed",
+        "successful"
+      ]
+    },
+    "lastFinishedStep": {
+      "type": "number",
+      "description": "Number of finished tasks."
+    },
+    "stepCount": {
+      "type": "number",
+      "description": "Number of steps this task consists of."
+    },
+    "template": {
+      "type": "string",
+      "description": "Template identification."
+    },
+    "pid": {
+      "type": "number",
+      "description": "PID of process executing this task."
+    }
+  }
+}
