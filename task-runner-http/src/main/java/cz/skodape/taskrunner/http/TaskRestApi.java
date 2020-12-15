@@ -120,19 +120,17 @@ public class TaskRestApi extends Application {
             @Context UriInfo uriInfo,
             @PathParam("template") String templatePath,
             @FormDataParam("input") List<FormDataBodyPart> files) {
-        return (new CreateTaskAction(taskStorage, templateStorage))
-                .create(templatePath, null, uriInfo, files,
-                        (reference -> Response.created(
-                                createLocationForNewTask(reference)
-                        ).build()));
+        return (new CreateTaskAction(taskStorage, templateStorage)).create(
+                templatePath, null, uriInfo, files, this::createTaskResponse);
     }
 
-    private URI createLocationForNewTask(TaskReference reference) {
-        TaskTemplate template = templateStorage.getTemplate(
-                reference.getTemplate());
-        String uriAsString = template.newLocationHttpTemplate
-                .replace("{task}", reference.getId());
-        return URI.create(uriAsString);
+    private Response createTaskResponse(TaskReference reference) {
+        // We can't return location as it is resolved to absolute URL,
+        // so instead we return the task identification.
+        return Response.status(201)
+                .header("task-runner-template", reference.getTemplate())
+                .header("task-runner-task", reference.getId())
+                .build();
     }
 
     @GET
