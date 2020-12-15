@@ -38,6 +38,10 @@ public class TaskTemplateStorage {
     private void loadTemplate(File file) {
         try {
             JsonNode node = readFile(file);
+            if (node == null) {
+                // Ignore files we can not load.
+                return;
+            }
             TaskTemplate template =
                     TaskTemplateJacksonAdapter.asTaskTemplate(node);
             templatesById.put(template.id, template);
@@ -51,8 +55,10 @@ public class TaskTemplateStorage {
         ObjectMapper objectMapper;
         if (isYaml(file.getName())) {
             objectMapper = new ObjectMapper(new YAMLFactory());
-        } else {
+        } else if (isJson(file.getName())) {
             objectMapper = new ObjectMapper();
+        } else {
+            return null;
         }
         JsonNode node = objectMapper.readTree(file);
         if (isYaml(file.getName())) {
@@ -64,6 +70,11 @@ public class TaskTemplateStorage {
     private static boolean isYaml(String fileName) {
         String lowerName = fileName.toLowerCase();
         return lowerName.endsWith(".yaml") || lowerName.endsWith(".yml");
+    }
+
+    private static boolean isJson(String fileName) {
+        String lowerName = fileName.toLowerCase();
+        return lowerName.endsWith(".json");
     }
 
     public TaskTemplate getTemplate(String id) {
