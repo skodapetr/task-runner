@@ -27,9 +27,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import javax.ws.rs.core.UriInfo;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.URI;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -40,6 +37,19 @@ import java.util.function.Function;
 
 @Path("task")
 public class TaskRestApi extends Application {
+
+    static class ReferenceWrap {
+
+        public final TaskReference task;
+
+        public final TaskTemplate template;
+
+        public ReferenceWrap(TaskReference task, TaskTemplate template) {
+            this.task = task;
+            this.template = template;
+        }
+
+    }
 
     private static final Logger LOG =
             LoggerFactory.getLogger(TaskRestApi.class);
@@ -52,7 +62,7 @@ public class TaskRestApi extends Application {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private Tika tika = new Tika();
+    private final FileToResponse fileToResponse = new FileToResponse();
 
     static {
         dataFormat = new DateTimeFormatterBuilder()
@@ -210,14 +220,14 @@ public class TaskRestApi extends Application {
             @PathParam("template") String templatePath,
             @PathParam("id") String taskId) {
         return forTaskReference(templatePath, taskId, reference -> {
-            File file = taskStorage.getTaskStdOut(reference);
-            return streamFile(file);
+            File file = taskStorage.getTaskStdOut(reference.task);
+            return fileToResponse.streamFile(file);
         });
     }
 
     private Response forTaskReference(
             String templatePath, String taskId,
-            Function<TaskReference, Response> handler) {
+            Function<ReferenceWrap, Response> handler) {
         TaskTemplate template = templateStorage.getTemplateByPath(templatePath);
         if (template == null) {
             return notFound();
@@ -226,27 +236,7 @@ public class TaskRestApi extends Application {
         if (reference == null) {
             return notFound();
         }
-        return handler.apply(reference);
-    }
-
-    private Response streamFile(File file) {
-
-        if (file.exists()) {
-            return Response
-                    .ok((StreamingOutput) (output) -> {
-                        try (InputStream stream = new FileInputStream(file)) {
-                            stream.transferTo(output);
-                        }
-                    })
-                    .header("Content-Type", getContentType(file))
-                    .build();
-        } else {
-            return notFound();
-        }
-    }
-
-    private String getContentType(File file) {
-        return tika.detect(file.toString());
+        return handler.apply(new ReferenceWrap(reference, template));
     }
 
     @GET
@@ -255,8 +245,8 @@ public class TaskRestApi extends Application {
             @PathParam("template") String templatePath,
             @PathParam("id") String taskId) {
         return forTaskReference(templatePath, taskId, reference -> {
-            File file = taskStorage.getTaskErrOut(reference);
-            return streamFile(file);
+            File file = taskStorage.getTaskErrOut(reference.task);
+            return fileToResponse.streamFile(file);
         });
     }
 
@@ -268,17 +258,21 @@ public class TaskRestApi extends Application {
             @PathParam("file") String userFileName,
             @Context UriInfo uriInfo) {
         final String fileName = userFileName.replace("\\", "/");
-        if (!isSecure(fileName)) {
+        if (!isFileNameSecure(fileName)) {
             return notFound();
         }
         return forTaskReference(templatePath, taskId, reference -> {
-            File publicDir = taskStorage.getTaskPublicDirectory(reference);
+            File publicDir = taskStorage.getTaskPublicDirectory(reference.task);
             File file = new File(publicDir, fileName);
-            return streamFile(file);
+            if (reference.template.allowGzipPublicFiles) {
+                return fileToResponse.streamFileOrGzip(file);
+            } else {
+                return fileToResponse.streamFile(file);
+            }
         });
     }
 
-    private static boolean isSecure(String fileName) {
+    private static boolean isFileNameSecure(String fileName) {
         return !fileName.contains("/./") && !fileName.contains("/../");
     }
 

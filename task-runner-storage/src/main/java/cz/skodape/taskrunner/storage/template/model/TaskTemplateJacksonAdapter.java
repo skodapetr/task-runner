@@ -38,6 +38,10 @@ public class TaskTemplateJacksonAdapter {
             specification.taskGetIdentificationTransformation =
                     StringTransformation.fromString(value);
         }
+        if (node.has("allowGzipPublicFiles")) {
+            specification.allowGzipPublicFiles =
+                    node.get("allowGzipPublicFiles").booleanValue();
+        }
         return specification;
     }
 

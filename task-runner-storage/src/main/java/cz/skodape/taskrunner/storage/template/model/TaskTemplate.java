@@ -50,6 +50,13 @@ public class TaskTemplate {
     public StringTransformation taskGetIdentificationTransformation
             = StringTransformation.None;
 
+    /**
+     * If true and user request file named "file.txt" and the file does not
+     * exists in the public directory, then we should try to serve
+     * "file.txt.gz" instead.
+     */
+    public boolean allowGzipPublicFiles = false;
+
     public List<TaskStep> steps = new ArrayList<>();
 
 }
