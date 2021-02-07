@@ -23,10 +23,6 @@ public class TaskTemplateJacksonAdapter {
         if (node.has("readOnly")) {
             specification.readOnly = node.get("readOnly").booleanValue();
         }
-        if (node.has("newLocationHttpTemplate")) {
-            specification.newLocationHttpTemplate =
-                    node.get("newLocationHttpTemplate").asText();
-        }
         if (node.has("steps")) {
             for (JsonNode stepNode : node.get("steps")) {
                 specification.steps.add(asTaskStep(stepNode));

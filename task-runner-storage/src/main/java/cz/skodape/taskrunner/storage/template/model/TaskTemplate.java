@@ -38,12 +38,6 @@ public class TaskTemplate {
     public boolean readOnly = false;
 
     /**
-     * Template used by HTTP service to create response Location
-     * header.
-     */
-    public String newLocationHttpTemplate = null;
-
-    /**
      * Normalize task identification created using HTTP GET interface, does
      * not apply to other requests.
      */
