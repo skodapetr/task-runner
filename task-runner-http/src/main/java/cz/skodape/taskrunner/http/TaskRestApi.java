@@ -9,7 +9,6 @@ import cz.skodape.taskrunner.storage.instance.WritableTaskStorage;
 import cz.skodape.taskrunner.storage.instance.model.TaskInstance;
 import cz.skodape.taskrunner.storage.template.TaskTemplateStorage;
 import cz.skodape.taskrunner.storage.template.model.TaskTemplate;
-import org.apache.tika.Tika;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;

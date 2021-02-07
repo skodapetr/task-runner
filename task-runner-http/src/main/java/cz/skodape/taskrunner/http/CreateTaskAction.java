@@ -6,7 +6,6 @@ import cz.skodape.taskrunner.storage.instance.TaskReference;
 import cz.skodape.taskrunner.storage.instance.WritableTaskStorage;
 import cz.skodape.taskrunner.storage.template.TaskTemplateStorage;
 import cz.skodape.taskrunner.storage.template.model.TaskTemplate;
-import org.eclipse.jetty.security.LoginService;
 import org.glassfish.jersey.media.multipart.BodyPartEntity;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -29,7 +28,7 @@ class CreateTaskAction {
     private static final Logger LOG =
             LoggerFactory.getLogger(CreateTaskAction.class);
 
-    private final static String FILE_PART_NAME = "input";
+    private static final String FILE_PART_NAME = "input";
 
     private final WritableTaskStorage taskStorage;
 

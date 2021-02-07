@@ -25,7 +25,7 @@ public class PrepareStorage {
     private static final Logger LOG =
             LoggerFactory.getLogger(PrepareStorage.class);
 
-    private static final SimpleDateFormat DATE_FORMAT =
+    private final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
 
     private final WritableTaskStorage taskStorage;

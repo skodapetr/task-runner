@@ -2,7 +2,6 @@ package cz.skodape.taskrunner.cli.service;
 
 import cz.skodape.taskrunner.executor.TaskExecutor;
 import cz.skodape.taskrunner.storage.StorageException;
-import cz.skodape.taskrunner.storage.instance.DirectoryTaskStorage;
 import cz.skodape.taskrunner.storage.instance.StorageObserver;
 import cz.skodape.taskrunner.storage.instance.TaskReference;
 import cz.skodape.taskrunner.storage.instance.WritableTaskStorage;
