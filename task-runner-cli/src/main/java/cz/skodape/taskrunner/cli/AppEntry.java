@@ -24,6 +24,7 @@ public class AppEntry {
         // Execute task if there is any.
         if (configuration.taskToRun != null) {
             (new RunTaskCommand(configuration)).execute();
+            return;
         }
         // In every case start all services that we should start.
         (new StartServices(configuration)).execute();
