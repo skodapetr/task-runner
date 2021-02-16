@@ -44,10 +44,10 @@ public class StartServices {
     }
 
     private void initializeStorage() {
-        taskStorage = new WritableTaskStorage(
-                configuration.taskDirectory, configuration.workingDirectory);
         templateStorage = new TaskTemplateStorage();
         templateStorage.load(configuration.templateDirectory);
+        taskStorage = new WritableTaskStorage(
+                configuration.taskDirectory, configuration.workingDirectory);
         if (configuration.restartRunningTasks) {
             (new PrepareStorage(taskStorage,templateStorage)).prepare();
         }
@@ -64,6 +64,7 @@ public class StartServices {
                 templateStorage,
                 configuration.executorThreads);
         executorService.start();
+        LOG.info("Starting executor ... done");
     }
 
     private void startHttpService() throws HttpServerException {

@@ -85,7 +85,7 @@ public class TaskTemplateStorage {
         return templatesByPath.get(path);
     }
 
-    public Set<String> getTemplateNames() {
+    public Set<String> getTemplateIds() {
         return templatesById.keySet();
     }
 

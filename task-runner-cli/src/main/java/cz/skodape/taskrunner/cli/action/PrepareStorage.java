@@ -41,7 +41,7 @@ public class PrepareStorage {
 
     public void prepare() {
         LOG.info("Checking tasks ...");
-        for (String templateName : templateStorage.getTemplateNames()) {
+        for (String templateName : templateStorage.getTemplateIds()) {
             TaskTemplate template = templateStorage.getTemplate(templateName);
             if (template.readOnly) {
                 continue;

@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -53,7 +54,7 @@ public class ExecutorService {
      * {@link StorageObserver} need directories to exist.
      */
     private void createTemplateDirectories() {
-        for (String templateName : templateStorage.getTemplateNames()) {
+        for (String templateName : templateStorage.getTemplateIds()) {
             taskStorage.secureTemplateTaskDirectory(templateName);
         }
     }
@@ -65,8 +66,16 @@ public class ExecutorService {
     }
 
     private void startQueued() {
-        for (TaskReference reference : taskStorage.getTasks()) {
-            checkAndRunTask(reference);
+        for (String templateId : templateStorage.getTemplateIds()) {
+            TaskTemplate template = templateStorage.getTemplate(templateId);
+            if (template.readOnly) {
+                continue;
+            }
+            List<TaskReference> tasks =
+                    taskStorage.getTasksForTemplate(templateId);
+            for (TaskReference reference : tasks) {
+                checkAndRunTask(reference);
+            }
         }
     }
 
