@@ -38,6 +38,12 @@ public class TaskTemplate {
     public boolean readOnly = false;
 
     /**
+     * Disable listing of tasks. List of all tasks can not be retrieved
+     * using HTTP endpoint. Use for large number of tasks.
+     */
+    public boolean disableListing = false;
+
+    /**
      * Normalize task identification created using HTTP GET interface, does
      * not apply to other requests.
      */

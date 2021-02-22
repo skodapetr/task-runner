@@ -29,6 +29,7 @@ import java.io.File;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -80,7 +81,15 @@ public class TaskRestApi extends Application {
     @GET
     public Response getAll() {
         ObjectNode root = objectMapper.createObjectNode();
-        root.set("data", asArrayNode(taskStorage.getTasks()));
+        List<TaskReference> tasks = new ArrayList<>();
+        for (String templateId : templateStorage.getTemplateIds()) {
+            TaskTemplate template = templateStorage.getTemplate(templateId);
+            if (template.disableListing) {
+                continue;
+            }
+            tasks.addAll(taskStorage.getTasksForTemplate(templateId));
+        }
+        root.set("data", asArrayNode(tasks));
         return Response.ok((StreamingOutput) (object) ->
                 objectMapper.writeValue(object, root))
                 .type(MediaType.APPLICATION_JSON_TYPE)
@@ -147,9 +156,13 @@ public class TaskRestApi extends Application {
     public Response getForTemplate(@PathParam("template") String templatePath) {
         ObjectNode root = objectMapper.createObjectNode();
         TaskTemplate template = templateStorage.getTemplateByPath(templatePath);
-        root.set(
-                "data",
-                asArrayNode(taskStorage.getTasksForTemplate(template.id)));
+        if (template.disableListing) {
+            root.set("data", objectMapper.createArrayNode());
+        } else {
+            root.set(
+                    "data",
+                    asArrayNode(taskStorage.getTasksForTemplate(template.id)));
+        }
         return Response.ok((StreamingOutput) (object) ->
                 objectMapper.writeValue(object, root))
                 .type(MediaType.APPLICATION_JSON_TYPE)

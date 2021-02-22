@@ -23,6 +23,10 @@ public class TaskTemplateJacksonAdapter {
         if (node.has("readOnly")) {
             specification.readOnly = node.get("readOnly").booleanValue();
         }
+        if (node.has("disableListing")) {
+            specification.disableListing =
+                    node.get("disableListing").booleanValue();
+        }
         if (node.has("steps")) {
             for (JsonNode stepNode : node.get("steps")) {
                 specification.steps.add(asTaskStep(stepNode));
