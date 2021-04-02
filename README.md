@@ -1,8 +1,5 @@
 # Task Runner
 [![Maintainability](https://api.codeclimate.com/v1/badges/7e8ac60fa925731d15f2/maintainability)](https://codeclimate.com/github/skodapetr/task-runner/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/7e8ac60fa925731d15f2/test_coverage)](https://codeclimate.com/github/skodapetr/task-runner/test_coverage)
-[![Known Vulnerabilities](https://snyk.io/test/github/skodapetr/task-runner/master/badge.svg)](https://snyk.io/test/github/skodapetr/task-runner/master)
-
 
 Task runner allows you to expose executable files in form of a HTTP service.
 
