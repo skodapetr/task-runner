@@ -23,7 +23,8 @@ public class TaskTemplate {
 
     /**
      * If set a new task is created on GET request if requested task
-     * does not exist. Can be used only for tasks with not input.
+     * does not exist. Can be used only for tasks with not input. The GET
+     * request must be for the template status ./{template}/{id}.
      */
     public boolean createOnGet = false;
 
