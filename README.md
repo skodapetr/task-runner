@@ -51,7 +51,9 @@ options can be specified:
    version of the file can be served.
  * ```keyFromPost``` - can be used with ```allowInputFiles```, if set to true
    the content of the POST request is used to create a task identifier.
- * ```timeToLiveMinutes``` - duration of task after its execution is finished.
+ * ```timeToLiveMinutes``` - how long must be a task preserved after it has
+   been finished.
+
 For more information see [TaskTemplate.java](./task-runner-storage/src/main/java/cz/skodape/taskrunner/storage/template/model/TaskTemplate.java).
 
 ### Options taskGetIdentificationTransformation

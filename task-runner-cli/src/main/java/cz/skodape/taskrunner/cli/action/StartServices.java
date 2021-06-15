@@ -5,6 +5,7 @@ import cz.skodape.taskrunner.cli.service.ExecutorService;
 import cz.skodape.taskrunner.cli.service.HttpService;
 import cz.skodape.taskrunner.http.HttpServerException;
 import cz.skodape.taskrunner.storage.instance.observer.ObserverService;
+import cz.skodape.taskrunner.storage.instance.prune.PruneService;
 import cz.skodape.taskrunner.storage.instance.storage.WritableTaskStorage;
 import cz.skodape.taskrunner.storage.template.TaskTemplateStorage;
 import org.slf4j.Logger;
@@ -29,6 +30,8 @@ public class StartServices {
 
     private ObserverService observerService;
 
+    private PruneService pruneService;
+
     public StartServices(AppConfiguration configuration) {
         this.configuration = configuration;
     }
@@ -39,6 +42,7 @@ public class StartServices {
             startExecutorService();
             startHttpService();
             startObserverService();
+            startPruneService();
             waitForEternity();
         } catch (Exception ex) {
             LOG.error("Error running services.", ex);
@@ -56,6 +60,7 @@ public class StartServices {
             (new PrepareStorage(taskStorage,templateStorage)).prepare();
         }
         observerService = new ObserverService(taskStorage);
+        pruneService = new PruneService(taskStorage, templateStorage);
     }
 
     private void startExecutorService() {
@@ -87,11 +92,15 @@ public class StartServices {
         observerService.start();
     }
 
+    private void startPruneService() {
+        pruneService.start();
+    }
+
     /**
      * The main thread just wait as it does nothing.
      */
     private void waitForEternity() {
-        LOG.info("Running ...");
+        LOG.info("All requested services are running");
         // TODO Check for SIGTERM
         while (true) {
             try {
@@ -112,6 +121,9 @@ public class StartServices {
         }
         if (observerService != null) {
             observerService.stop();
+        }
+        if (pruneService != null) {
+            pruneService.stop();
         }
     }
 

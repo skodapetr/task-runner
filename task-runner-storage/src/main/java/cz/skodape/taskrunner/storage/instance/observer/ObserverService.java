@@ -24,9 +24,9 @@ public class ObserverService {
 
     public static final int CHECK_PENDING_COUNT = 6;
 
-    public  static final int POOL_TIMEOUT = 5;
+    public static final int POOL_TIMEOUT = 5;
 
-    public  static final int PENDING_CHECK_INTERVAL = 10;
+    public static final int PENDING_CHECK_INTERVAL = 10;
 
     private static final Logger LOG =
             LoggerFactory.getLogger(ObserverService.class);
@@ -67,7 +67,7 @@ public class ObserverService {
     }
 
     public void stop() {
-        LOG.info("Stopping storage observer.");
+        LOG.info("Stopping storage observer ...");
         while (true) {
             thread.interrupt();
             try {
@@ -79,7 +79,7 @@ public class ObserverService {
             if (!thread.isAlive()) {
                 break;
             }
-            LOG.info("Waiting for observer thread fo finish.");
+            LOG.info("Waiting for observer thread to finish.");
         }
         watchKeyToTemplate.clear();
     }

@@ -25,4 +25,8 @@ public enum TaskStatus {
         return null;
     }
 
+    public static boolean isFinished(TaskStatus status) {
+        return status == FAILED || status == SUCCESSFUL;
+    }
+
 }
