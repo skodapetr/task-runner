@@ -94,11 +94,6 @@ public abstract class TaskStorage {
         return new File(getTaskDirectory(reference), ERROUT_FILE_NAME);
     }
 
-    public void delete(TaskReference reference) {
-        // TODO Add into a queue and try to delete in future if a delete fail.
-        DirectoryUtils.delete(getTaskDirectory(reference));
-    }
-
     public void updateTaskInstance(
             TaskReference reference, TaskInstance instance)
             throws StorageException {

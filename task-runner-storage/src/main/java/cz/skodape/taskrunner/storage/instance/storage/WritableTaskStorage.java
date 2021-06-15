@@ -1,5 +1,6 @@
 package cz.skodape.taskrunner.storage.instance.storage;
 
+import cz.skodape.taskrunner.storage.DirectoryUtils;
 import cz.skodape.taskrunner.storage.instance.TaskReference;
 import cz.skodape.taskrunner.storage.instance.model.TaskConfiguration;
 import cz.skodape.taskrunner.storage.instance.model.TaskConfigurationJacksonAdapter;
@@ -165,6 +166,11 @@ public class WritableTaskStorage extends DirectoryTaskStorage {
         if (!path.exists()) {
             path.mkdirs();
         }
+    }
+
+    public void delete(TaskReference reference) {
+        // TODO Add into a queue and try to delete in future if a delete fail.
+        DirectoryUtils.delete(getTaskDirectory(reference));
     }
 
 }
