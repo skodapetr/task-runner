@@ -1,6 +1,8 @@
-package cz.skodape.taskrunner.storage.instance;
+package cz.skodape.taskrunner.storage.instance.storage;
 
 import cz.skodape.taskrunner.storage.DirectoryUtils;
+import cz.skodape.taskrunner.storage.instance.TaskBuilder;
+import cz.skodape.taskrunner.storage.instance.TaskReference;
 import cz.skodape.taskrunner.storage.template.model.TaskTemplate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

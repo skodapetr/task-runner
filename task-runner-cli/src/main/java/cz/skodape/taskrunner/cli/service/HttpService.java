@@ -2,7 +2,7 @@ package cz.skodape.taskrunner.cli.service;
 
 import cz.skodape.taskrunner.http.JettyHttpServer;
 import cz.skodape.taskrunner.http.HttpServerException;
-import cz.skodape.taskrunner.storage.instance.WritableTaskStorage;
+import cz.skodape.taskrunner.storage.instance.storage.WritableTaskStorage;
 import cz.skodape.taskrunner.storage.template.TaskTemplateStorage;
 
 public class HttpService {

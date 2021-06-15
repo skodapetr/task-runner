@@ -3,7 +3,7 @@ package cz.skodape.taskrunner.http;
 import cz.skodape.taskrunner.storage.StorageException;
 import cz.skodape.taskrunner.storage.instance.TaskBuilder;
 import cz.skodape.taskrunner.storage.instance.TaskReference;
-import cz.skodape.taskrunner.storage.instance.WritableTaskStorage;
+import cz.skodape.taskrunner.storage.instance.storage.WritableTaskStorage;
 import cz.skodape.taskrunner.storage.template.TaskTemplateStorage;
 import cz.skodape.taskrunner.storage.template.model.TaskTemplate;
 import org.glassfish.jersey.media.multipart.BodyPartEntity;

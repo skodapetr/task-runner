@@ -1,5 +1,6 @@
-package cz.skodape.taskrunner.storage.instance;
+package cz.skodape.taskrunner.storage.instance.storage;
 
+import cz.skodape.taskrunner.storage.instance.TaskReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

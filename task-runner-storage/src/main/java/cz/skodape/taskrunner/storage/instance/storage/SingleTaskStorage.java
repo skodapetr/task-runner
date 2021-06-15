@@ -1,4 +1,6 @@
-package cz.skodape.taskrunner.storage.instance;
+package cz.skodape.taskrunner.storage.instance.storage;
+
+import cz.skodape.taskrunner.storage.instance.TaskReference;
 
 import java.io.File;
 

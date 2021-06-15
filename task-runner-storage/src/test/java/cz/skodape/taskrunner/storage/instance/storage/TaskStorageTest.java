@@ -1,4 +1,4 @@
-package cz.skodape.taskrunner.storage.instance;
+package cz.skodape.taskrunner.storage.instance.storage;
 
 import cz.skodape.taskrunner.storage.TestResources;
 import cz.skodape.taskrunner.storage.StorageException;

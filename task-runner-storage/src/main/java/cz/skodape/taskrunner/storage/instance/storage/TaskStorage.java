@@ -1,4 +1,4 @@
-package cz.skodape.taskrunner.storage.instance;
+package cz.skodape.taskrunner.storage.instance.storage;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import cz.skodape.taskrunner.storage.DirectoryUtils;
 import cz.skodape.taskrunner.storage.ModelException;
 import cz.skodape.taskrunner.storage.StorageException;
+import cz.skodape.taskrunner.storage.instance.TaskReference;
 import cz.skodape.taskrunner.storage.instance.model.TaskConfiguration;
 import cz.skodape.taskrunner.storage.instance.model.TaskConfigurationJacksonAdapter;
 import cz.skodape.taskrunner.storage.instance.model.TaskInstance;

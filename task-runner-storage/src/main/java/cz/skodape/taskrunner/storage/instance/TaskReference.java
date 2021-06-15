@@ -19,7 +19,7 @@ public class TaskReference {
         return id;
     }
 
-    static TaskReference create(String template, String name) {
+    public static TaskReference create(String template, String name) {
         return new TaskReference(template, name);
     }
 

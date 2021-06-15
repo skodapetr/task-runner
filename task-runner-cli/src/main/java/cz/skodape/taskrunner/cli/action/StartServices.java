@@ -4,7 +4,7 @@ import cz.skodape.taskrunner.cli.AppConfiguration;
 import cz.skodape.taskrunner.cli.service.ExecutorService;
 import cz.skodape.taskrunner.cli.service.HttpService;
 import cz.skodape.taskrunner.http.HttpServerException;
-import cz.skodape.taskrunner.storage.instance.WritableTaskStorage;
+import cz.skodape.taskrunner.storage.instance.storage.WritableTaskStorage;
 import cz.skodape.taskrunner.storage.template.TaskTemplateStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

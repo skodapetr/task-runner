@@ -1,8 +1,10 @@
-package cz.skodape.taskrunner.storage.instance;
+package cz.skodape.taskrunner.storage.instance.storage;
 
 import cz.skodape.taskrunner.storage.TestResources;
 import cz.skodape.taskrunner.storage.DirectoryUtils;
 import cz.skodape.taskrunner.storage.StorageException;
+import cz.skodape.taskrunner.storage.instance.TaskBuilder;
+import cz.skodape.taskrunner.storage.instance.TaskReference;
 import cz.skodape.taskrunner.storage.instance.model.TaskInstance;
 import cz.skodape.taskrunner.storage.template.model.TaskTemplate;
 import cz.skodape.taskrunner.storage.instance.model.TaskStatus;

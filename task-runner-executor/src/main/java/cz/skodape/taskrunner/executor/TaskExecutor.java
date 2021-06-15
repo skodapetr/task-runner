@@ -2,7 +2,7 @@ package cz.skodape.taskrunner.executor;
 
 import cz.skodape.taskrunner.storage.StorageException;
 import cz.skodape.taskrunner.storage.instance.TaskReference;
-import cz.skodape.taskrunner.storage.instance.TaskStorage;
+import cz.skodape.taskrunner.storage.instance.storage.TaskStorage;
 import cz.skodape.taskrunner.storage.instance.model.TaskInstance;
 import cz.skodape.taskrunner.storage.instance.model.TaskStatus;
 import cz.skodape.taskrunner.storage.template.model.TaskTemplate;

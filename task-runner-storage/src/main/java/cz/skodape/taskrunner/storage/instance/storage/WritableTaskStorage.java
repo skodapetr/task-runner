@@ -1,5 +1,6 @@
-package cz.skodape.taskrunner.storage.instance;
+package cz.skodape.taskrunner.storage.instance.storage;
 
+import cz.skodape.taskrunner.storage.instance.TaskReference;
 import cz.skodape.taskrunner.storage.instance.model.TaskConfiguration;
 import cz.skodape.taskrunner.storage.instance.model.TaskConfigurationJacksonAdapter;
 import cz.skodape.taskrunner.storage.instance.model.TaskInstance;

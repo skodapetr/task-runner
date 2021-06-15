@@ -1,6 +1,6 @@
 package cz.skodape.taskrunner.http;
 
-import cz.skodape.taskrunner.storage.instance.WritableTaskStorage;
+import cz.skodape.taskrunner.storage.instance.storage.WritableTaskStorage;
 import cz.skodape.taskrunner.storage.template.TaskTemplateStorage;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;

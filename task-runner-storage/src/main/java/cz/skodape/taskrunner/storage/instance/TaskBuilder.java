@@ -3,6 +3,7 @@ package cz.skodape.taskrunner.storage.instance;
 import cz.skodape.taskrunner.storage.DirectoryUtils;
 import cz.skodape.taskrunner.storage.instance.model.TaskConfiguration;
 import cz.skodape.taskrunner.storage.instance.model.TaskInstance;
+import cz.skodape.taskrunner.storage.instance.storage.WritableTaskStorage;
 import cz.skodape.taskrunner.storage.template.model.TaskTemplate;
 import cz.skodape.taskrunner.storage.instance.model.TaskStatus;
 import cz.skodape.taskrunner.storage.StorageException;
@@ -26,7 +27,7 @@ public class TaskBuilder {
 
     private final TaskTemplate template;
 
-    protected TaskBuilder(
+    public TaskBuilder(
             WritableTaskStorage storage,
             WritableTaskStorage.NewTaskData task,
             TaskTemplate template) {
