@@ -1,0 +1,11 @@
+template:
+  id: "echo"
+  urlPath: "echo"
+  version: 1
+  allowInputFiles: false
+  createOnGet: true
+  mergeErrOutToStdOut: true
+  timeToLiveMinutes: 1
+  steps:
+    - name: "echo"
+      command: 'echo "${_.id}"'

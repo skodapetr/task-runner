@@ -1,8 +1,5 @@
 # Task Runner
 [![Maintainability](https://api.codeclimate.com/v1/badges/7e8ac60fa925731d15f2/maintainability)](https://codeclimate.com/github/skodapetr/task-runner/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/7e8ac60fa925731d15f2/test_coverage)](https://codeclimate.com/github/skodapetr/task-runner/test_coverage)
-[![Known Vulnerabilities](https://snyk.io/test/github/skodapetr/task-runner/master/badge.svg)](https://snyk.io/test/github/skodapetr/task-runner/master)
-
 
 Task runner allows you to expose executable files in form of a HTTP service.
 
@@ -24,13 +21,41 @@ Start the server with example data.
     --WorkingDirectory=./example/working \
     --WorkerCount=1 \
     --HttpPort=8020
-```                                                                                                                                                     
-Crete a task:
+```
+Create a new ```echo``` task with identifier ```hello world```:
 ```
 curl http://localhost:8020/api/v1/task/echo/hello%20world
 ```
 Retrieve status and output file:
 ```
 curl http://localhost:8020/api/v1/task/echo/hello%20world
-curl http://localhost:8020/api/v1/task/echo/hello%20world/public/result
+curl http://localhost:8020/api/v1/task/echo/hello%20world/stdout
 ```
+
+## Task specification
+Tasks can be specified using YAML or JSON file format. For each task following
+options can be specified:
+ * ```id``` - name of the data directory.
+ * ```urlPath``` - used in URL to identify the task.
+ * ```allowInputFiles``` - allow input files for POST methods.
+ * ```createOnGet``` - create new task when user perform GET for non-existing 
+   task.
+ * ```mergeErrOutToStdOut```
+ * ```readOnly``` - task can not be created or deleted.
+ * ```disableListing``` - disable listing of all tasks, use for large number
+   of tasks.
+ * ```steps``` - commands to execute.
+ * ```taskGetIdentificationTransformation``` - define transformation of task ID
+   obtained from the URL.
+ * ```allowGzipPublicFiles``` - if true and user ask for public file the GZIP
+   version of the file can be served.
+ * ```keyFromPost``` - can be used with ```allowInputFiles```, if set to true
+   the content of the POST request is used to create a task identifier.
+ * ```timeToLiveMinutes``` - duration of task after its execution is finished.
+
+### Options taskGetIdentificationTransformation
+Supported values are:
+ * ```none``` - default, no transformation.
+ * ```lowercase``` - change to lowercase.
+ * ```uppercase``` - change to uppercase.
+

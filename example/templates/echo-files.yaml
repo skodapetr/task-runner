@@ -1,0 +1,12 @@
+template:
+  id: "echo-files"
+  urlPath: "echo-files"
+  version: 1
+  allowInputFiles: true
+  createOnGet: false
+  mergeErrOutToStdOut: true
+  keyFromPost: true
+  timeToLiveMinutes: 1
+  steps:
+    - name: "echo"
+      command: 'echo "check ./public for your files"'
