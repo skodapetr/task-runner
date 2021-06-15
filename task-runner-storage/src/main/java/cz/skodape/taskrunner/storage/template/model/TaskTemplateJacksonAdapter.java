@@ -42,6 +42,14 @@ public class TaskTemplateJacksonAdapter {
             specification.allowGzipPublicFiles =
                     node.get("allowGzipPublicFiles").booleanValue();
         }
+        if (node.has("keyFromPost")) {
+            specification.keyFromPost =
+                    node.get("keyFromPost").booleanValue();
+        }
+        if (node.has("timeToLiveMinutes")) {
+            specification.timeToLive =
+                    node.get("timeToLiveMinutes").intValue() * 60;
+        }
         return specification;
     }
 

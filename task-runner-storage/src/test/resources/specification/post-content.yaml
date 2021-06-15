@@ -1,0 +1,10 @@
+template:
+  id: "post-content"
+  urlPath: "post-content"
+  version: 1
+  allowInputFiles: true
+  mergeErrOutToStdOut: true
+  keyFromPost: true
+  steps:
+    - name: "echo"
+      command: 'echo "${content}"'

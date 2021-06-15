@@ -23,7 +23,7 @@ public class TaskTemplate {
 
     /**
      * If set a new task is created on GET request if requested task
-     * does not exist.
+     * does not exist. Can be used only for tasks with not input.
      */
     public boolean createOnGet = false;
 
@@ -42,6 +42,19 @@ public class TaskTemplate {
      * using HTTP endpoint. Use for large number of tasks.
      */
     public boolean disableListing = false;
+
+    /**
+     * If input files are allowed, the POST content, they are used to
+     * for a task identification.
+     */
+    public boolean keyFromPost = false;
+
+    /**
+     * If set define in seconds the expiration time of the task after the
+     * task is finished. The task can be deleted any time after the time to
+     * live expires. Use null to never delete the task.
+     */
+    public Integer timeToLive = null;
 
     /**
      * Normalize task identification created using HTTP GET interface, does

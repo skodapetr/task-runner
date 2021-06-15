@@ -1,6 +1,7 @@
 package cz.skodape.taskrunner.storage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import cz.skodape.taskrunner.storage.instance.model.TaskConfiguration;
 import cz.skodape.taskrunner.storage.instance.model.TaskConfigurationJacksonAdapter;
 import cz.skodape.taskrunner.storage.instance.model.TaskInstance;
@@ -24,6 +25,8 @@ public class JsonAdapterTest {
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     private final ObjectMapper mapper = new ObjectMapper();
+
+    private final ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
 
     @Test
     public void loadTask() throws IOException, ModelException, ParseException {
@@ -58,7 +61,7 @@ public class JsonAdapterTest {
     }
 
     @Test
-    public void loadTaskSpecification() throws IOException {
+    public void loadTaskSpecificationAddInteger() throws IOException {
         var node = mapper.readTree(TestResources.file(
                 "./specification/add-integer.json"));
         TaskTemplate actual = TaskTemplateJacksonAdapter.asTaskTemplate(node);
@@ -70,6 +73,26 @@ public class JsonAdapterTest {
         Assertions.assertEquals("echo ${left}", actual.steps.get(0).command);
         Assertions.assertEquals("echo", actual.steps.get(1).name);
         Assertions.assertEquals("echo ${right}", actual.steps.get(1).command);
+    }
+
+    @Test
+    public void loadTaskSpecificationTimeToLive() throws IOException {
+        var node = yamlMapper.readTree(TestResources.file(
+                "./specification/add-string-with-ttl.yaml")).get("template");
+        TaskTemplate actual = TaskTemplateJacksonAdapter.asTaskTemplate(node);
+        //
+        Assertions.assertEquals("add-string", actual.id);
+        Assertions.assertEquals(5 * 60, actual.timeToLive);
+    }
+
+    @Test
+    public void loadTaskSpecificationPostKey() throws IOException {
+        var node = yamlMapper.readTree(TestResources.file(
+                "./specification/post-content.yaml")).get("template");
+        TaskTemplate actual = TaskTemplateJacksonAdapter.asTaskTemplate(node);
+        //
+        Assertions.assertEquals("post-content", actual.id);
+        Assertions.assertTrue(actual.keyFromPost);
     }
 
     @Test
