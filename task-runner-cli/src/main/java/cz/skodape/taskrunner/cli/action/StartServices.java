@@ -82,10 +82,6 @@ public class StartServices {
      */
     private void waitForEternity() {
         LOG.info("Running ...");
-        if (executorService == null) {
-            // There no reason to wait as nothing is running.
-            return;
-        }
         // TODO Check for SIGTERM
         while (true) {
             try {

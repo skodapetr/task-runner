@@ -21,13 +21,13 @@ public class AppEntry {
 
     public void run(String[] args) {
         AppConfiguration configuration = loadConfiguration(parseArgs(args));
-        // Execute task if there is any.
         if (configuration.taskToRun != null) {
+            // Execute task if there is any.
             (new RunTaskCommand(configuration)).execute();
-            return;
+        } else {
+            // Else we start all components.
+            (new StartServices(configuration)).execute();
         }
-        // In every case start all services that we should start.
-        (new StartServices(configuration)).execute();
     }
 
     @SuppressFBWarnings(value = {"DM_EXIT"})
