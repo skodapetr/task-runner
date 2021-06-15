@@ -2,8 +2,9 @@ package cz.skodape.taskrunner.cli.service;
 
 import cz.skodape.taskrunner.executor.TaskExecutor;
 import cz.skodape.taskrunner.storage.StorageException;
-import cz.skodape.taskrunner.storage.instance.storage.StorageObserver;
+import cz.skodape.taskrunner.storage.instance.observer.ObserverService;
 import cz.skodape.taskrunner.storage.instance.TaskReference;
+import cz.skodape.taskrunner.storage.instance.observer.StorageListener;
 import cz.skodape.taskrunner.storage.instance.storage.WritableTaskStorage;
 import cz.skodape.taskrunner.storage.instance.model.TaskInstance;
 import cz.skodape.taskrunner.storage.instance.model.TaskStatus;
@@ -27,22 +28,24 @@ public class ExecutorService {
 
     private final TaskTemplateStorage templateStorage;
 
+    private final ObserverService observer;
+
     private final int executorThreads;
 
     private ThreadPoolExecutor threadPool;
 
-    private StorageObserver observer;
-
     public ExecutorService(
             WritableTaskStorage taskStorage,
             TaskTemplateStorage templateStorage,
+            ObserverService observer,
             int executorThreads) {
         this.taskStorage = taskStorage;
         this.templateStorage = templateStorage;
+        this.observer = observer;
         this.executorThreads = executorThreads;
     }
 
-    public void start() throws IOException {
+    public void start()  {
         createTemplateDirectories();
         createThreadPool();
         startQueued();
@@ -51,7 +54,7 @@ public class ExecutorService {
 
     /**
      * We need this for {@link #registerStorageObserver()} as it
-     * {@link StorageObserver} need directories to exist.
+     * {@link ObserverService} need directories to exist.
      */
     private void createTemplateDirectories() {
         for (String templateName : templateStorage.getTemplateIds()) {
@@ -99,15 +102,19 @@ public class ExecutorService {
         threadPool.execute(new TaskExecutor(reference, template, taskStorage));
     }
 
-    private void registerStorageObserver() throws IOException {
-        observer = new StorageObserver(taskStorage, this::checkAndRunTask);
-        observer.start();
+    private void registerStorageObserver() {
+        if (observer == null) {
+            return;
+        }
+        observer.addListener(new StorageListener() {
+            @Override
+            public void onNewTask(TaskReference reference) {
+                checkAndRunTask(reference);
+            }
+        });
     }
 
     public void stop() {
-        if (observer != null) {
-            observer.stop();
-        }
         if (threadPool != null) {
             threadPool.shutdown();
             try {

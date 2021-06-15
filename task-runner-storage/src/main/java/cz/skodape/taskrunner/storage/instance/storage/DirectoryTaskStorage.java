@@ -11,6 +11,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * There is no caching of tasks, we always load all task from the drive.
+ */
 public class DirectoryTaskStorage extends TaskStorage {
 
     protected final File dataDirectory;
@@ -39,7 +42,7 @@ public class DirectoryTaskStorage extends TaskStorage {
                 template + File.separator + id);
     }
 
-    File getDataDirectory() {
+    public File getDataDirectory() {
         return dataDirectory;
     }
 
@@ -51,7 +54,7 @@ public class DirectoryTaskStorage extends TaskStorage {
         return result;
     }
 
-    List<String> getTemplates() {
+    public List<String> getTemplates() {
         File[] directories = getDataDirectory().listFiles();
         if (directories == null) {
             return Collections.emptyList();

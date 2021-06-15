@@ -4,6 +4,7 @@ import cz.skodape.taskrunner.cli.AppConfiguration;
 import cz.skodape.taskrunner.cli.service.ExecutorService;
 import cz.skodape.taskrunner.cli.service.HttpService;
 import cz.skodape.taskrunner.http.HttpServerException;
+import cz.skodape.taskrunner.storage.instance.observer.ObserverService;
 import cz.skodape.taskrunner.storage.instance.storage.WritableTaskStorage;
 import cz.skodape.taskrunner.storage.template.TaskTemplateStorage;
 import org.slf4j.Logger;
@@ -26,6 +27,8 @@ public class StartServices {
 
     private HttpService httpService;
 
+    private ObserverService observerService;
+
     public StartServices(AppConfiguration configuration) {
         this.configuration = configuration;
     }
@@ -35,6 +38,7 @@ public class StartServices {
         try {
             startExecutorService();
             startHttpService();
+            startObserverService();
             waitForEternity();
         } catch (Exception ex) {
             LOG.error("Error running services.", ex);
@@ -51,9 +55,10 @@ public class StartServices {
         if (configuration.restartRunningTasks) {
             (new PrepareStorage(taskStorage,templateStorage)).prepare();
         }
+        observerService = new ObserverService(taskStorage);
     }
 
-    private void startExecutorService() throws IOException {
+    private void startExecutorService() {
         if (configuration.executorThreads == null
                 || configuration.executorThreads == 0) {
             return;
@@ -62,6 +67,7 @@ public class StartServices {
         executorService = new ExecutorService(
                 taskStorage,
                 templateStorage,
+                observerService,
                 configuration.executorThreads);
         executorService.start();
         LOG.info("Starting executor ... done");
@@ -75,6 +81,10 @@ public class StartServices {
         httpService = new HttpService(
                 taskStorage, templateStorage, configuration.httpPort);
         httpService.start();
+    }
+
+    private void startObserverService() throws IOException {
+        observerService.start();
     }
 
     /**
@@ -99,6 +109,9 @@ public class StartServices {
         }
         if (httpService != null) {
             httpService.stop();
+        }
+        if (observerService != null) {
+            observerService.stop();
         }
     }
 

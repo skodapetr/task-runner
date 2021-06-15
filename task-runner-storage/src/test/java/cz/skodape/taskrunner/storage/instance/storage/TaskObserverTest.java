@@ -3,6 +3,7 @@ package cz.skodape.taskrunner.storage.instance.storage;
 import cz.skodape.taskrunner.storage.DirectoryUtils;
 import cz.skodape.taskrunner.storage.instance.TaskBuilder;
 import cz.skodape.taskrunner.storage.instance.TaskReference;
+import cz.skodape.taskrunner.storage.instance.observer.ObserverService;
 import cz.skodape.taskrunner.storage.template.model.TaskTemplate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ public class TaskObserverTest {
                 new File(directory, "data"),
                 new File(directory, "working"));
         (new File(directory, "data" + File.separator + "add-string")).mkdirs();
-        StorageObserver observer = new StorageObserver(storage, newTasks::add);
+        ObserverService observer = new ObserverService(storage, newTasks::add);
         observer.start();
         TaskTemplate specification = new TaskTemplate();
         specification.id = "add-string";
