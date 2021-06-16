@@ -92,7 +92,6 @@ public class JsonAdapterTest {
         TaskTemplate actual = TaskTemplateJacksonAdapter.asTaskTemplate(node);
         //
         Assertions.assertEquals("post-content", actual.id);
-        Assertions.assertTrue(actual.keyFromPost);
     }
 
     @Test

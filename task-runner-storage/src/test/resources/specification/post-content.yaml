@@ -4,7 +4,6 @@ template:
   version: 1
   allowInputFiles: true
   mergeErrOutToStdOut: true
-  keyFromPost: true
   steps:
     - name: "echo"
       command: 'echo "${content}"'

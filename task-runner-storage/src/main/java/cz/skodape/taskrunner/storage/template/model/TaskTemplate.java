@@ -45,12 +45,6 @@ public class TaskTemplate {
     public boolean disableListing = false;
 
     /**
-     * If input files are allowed, the POST content, they are used to
-     * for a task identification.
-     */
-    public boolean keyFromPost = false;
-
-    /**
      * If set define in seconds the expiration time of the task after the
      * task is finished. The task can be deleted any time after the time to
      * live expires. Use null to never delete the task.

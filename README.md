@@ -49,8 +49,6 @@ options can be specified:
    obtained from the URL.
  * ```allowGzipPublicFiles``` - if true and user ask for public file the GZIP
    version of the file can be served.
- * ```keyFromPost``` - can be used with ```allowInputFiles```, if set to true
-   the content of the POST request is used to create a task identifier.
  * ```timeToLiveMinutes``` - how long must be a task preserved after it has
    been finished.
 

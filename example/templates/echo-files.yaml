@@ -5,7 +5,6 @@ template:
   allowInputFiles: true
   createOnGet: false
   mergeErrOutToStdOut: true
-  keyFromPost: true
   timeToLiveMinutes: 1
   steps:
     - name: "echo"
