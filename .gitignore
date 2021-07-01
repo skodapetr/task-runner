@@ -5,6 +5,7 @@
 build/
 example/
 dist/
+node_modules/
 
 # Files
 *.iml

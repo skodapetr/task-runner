@@ -1,0 +1,17 @@
+{
+  "name": "task-runner-web-client",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "MIT-0",
+  "scripts": {
+    "dev": "node ./server/server.develop.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "express": "^4.17.1",
+    "request": "^2.88.2",
+    "winston": "^3.3.3"
+  }
+}

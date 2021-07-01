@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Task Runner</title>
+  <link href="./wait-for-task.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+
+  <div id="initial">
+    <div class="flex-center status-text">
+      Checking task status ...
+    </div>
+    <div class="flex-center">
+      <div class="lds-facebook">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="missing" class="invisible">
+    <div class="flex-center status-text">
+      Can not find given task.
+    </div>
+  </div>
+
+  <div id="queued" class="invisible">
+    <div class="flex-center status-text">
+      Task is waiting in queue ...
+    </div>
+    <div class="flex-center">
+      <div class="lds-facebook">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="running" class="invisible">
+    <div class="flex-center status-text">
+      Task is running ...
+    </div>
+    <div class="flex-center">
+      <div class="lds-facebook">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="successful" class="invisible">
+    <div class="flex-center status-text">
+      Task execution has finished.
+    </div>
+  </div>
+
+  <div id="failed" class="invisible">
+    <div class="flex-center status-text">
+      Task execution failed.
+    </div>
+  </div>
+
+  <div id="fetchFailed" class="invisible">
+    <div class="flex-center error-message">
+      Can't get task status.
+    </div>
+  </div>
+
+</div>
+<script src="./wait-for-task.js"></script>
+</body>
+</html>
