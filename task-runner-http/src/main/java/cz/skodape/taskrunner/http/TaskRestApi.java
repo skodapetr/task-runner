@@ -22,6 +22,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import javax.ws.rs.core.UriInfo;
@@ -135,19 +136,32 @@ public class TaskRestApi extends Application {
     @Path("/{template}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response createTask(
+            Request request,
             @Context UriInfo uriInfo,
             @PathParam("template") String templatePath,
             @FormDataParam("input") List<FormDataBodyPart> files) {
         return (new CreateTaskAction(taskStorage, templateStorage)).create(
-                templatePath, null, uriInfo, files, this::createTaskResponse);
+                templatePath, null, uriInfo, files,
+                this::responseReferenceForPost
+        );
     }
 
-    private Response createTaskResponse(TaskReference reference) {
-        // We can't return location as it is resolved to absolute URL,
-        // so instead we return the task identification.
-        return Response.status(201)
-                .header("task-runner-template", reference.getTemplate())
-                .header("task-runner-task", reference.getId())
+    /**
+     * We may need to apply redirect here.
+     */
+    private Response responseReferenceForPost(
+            TaskTemplate template, TaskReference reference) {
+        if (template.postResponseRedirectUrl == null) {
+            // We can't return location as it is resolved to absolute URL,
+            // so instead we return the task identification.
+            return Response.status(Response.Status.CREATED)
+                    .header("task-runner-template", reference.getTemplate())
+                    .header("task-runner-task", reference.getId())
+                    .build();
+        }
+        String url = CreateRedirectUrl.createUrl(template, reference);
+        return Response.status(Response.Status.SEE_OTHER)
+                .header("location", url)
                 .build();
     }
 
@@ -156,6 +170,9 @@ public class TaskRestApi extends Application {
     public Response getForTemplate(@PathParam("template") String templatePath) {
         ObjectNode root = objectMapper.createObjectNode();
         TaskTemplate template = templateStorage.getTemplateByPath(templatePath);
+        if (template == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         if (template.disableListing) {
             root.set("data", objectMapper.createArrayNode());
         } else {
@@ -188,7 +205,7 @@ public class TaskRestApi extends Application {
         }
         TaskReference reference = taskStorage.getTask(template.id, taskId);
         if (reference != null) {
-            return responseReference(reference);
+            return responseStatus(reference);
         }
         if (template.createOnGet) {
             return createOnGet(templatePath, taskId);
@@ -201,7 +218,7 @@ public class TaskRestApi extends Application {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 
-    private Response responseReference(TaskReference reference) {
+    private Response responseStatus(TaskReference reference) {
         TaskInstance task;
         try {
             task = taskStorage.getTaskInstance(reference);
@@ -221,9 +238,10 @@ public class TaskRestApi extends Application {
     }
 
     private Response createOnGet(String templatePath, String taskId) {
-        return (new CreateTaskAction(taskStorage, templateStorage))
-                .create(templatePath, taskId, null, Collections.emptyList(),
-                        (this::responseReference));
+        return (new CreateTaskAction(taskStorage, templateStorage)).create(
+                templatePath, taskId, null, Collections.emptyList(),
+                (template, reference) -> responseStatus(reference)
+        );
     }
 
     @GET

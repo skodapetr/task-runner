@@ -65,6 +65,14 @@ public class TaskTemplate {
      */
     public boolean allowGzipPublicFiles = false;
 
+    /**
+     * If set the response to POST is redirect on given URL. The URL
+     * constructed from a template.
+     * See {@link cz.skodape.taskrunner.http.CreateRedirectUrl} for details
+     * on the placeholders.
+     */
+    public String postResponseRedirectUrl = null;
+
     public List<TaskStep> steps = new ArrayList<>();
 
 }

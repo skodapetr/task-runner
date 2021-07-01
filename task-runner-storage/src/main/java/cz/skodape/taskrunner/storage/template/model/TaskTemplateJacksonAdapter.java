@@ -46,6 +46,10 @@ public class TaskTemplateJacksonAdapter {
             specification.timeToLive =
                     node.get("timeToLiveMinutes").intValue() * 60;
         }
+        if (node.has("postResponseRedirectUrl")) {
+            specification.postResponseRedirectUrl =
+                    node.get("postResponseRedirectUrl").textValue();
+        }
         return specification;
     }
 

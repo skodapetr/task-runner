@@ -25,6 +25,13 @@ import java.util.function.Function;
  */
 class CreateTaskAction {
 
+    @FunctionalInterface
+    public interface ResponseFactory {
+
+        Response apply(TaskTemplate template, TaskReference reference);
+
+    }
+
     private static final Logger LOG =
             LoggerFactory.getLogger(CreateTaskAction.class);
 
@@ -44,7 +51,7 @@ class CreateTaskAction {
     public Response create(
             String templatePath, String taskId,
             UriInfo uriInfo, List<FormDataBodyPart> files,
-            Function<TaskReference, Response> responseFactory) {
+            ResponseFactory responseFactory) {
         TaskTemplate template = templateStorage.getTemplateByPath(templatePath);
         if (template == null || template.readOnly) {
             return serverError();
@@ -63,7 +70,7 @@ class CreateTaskAction {
             builder.clear();
             return serverError();
         }
-        return responseFactory.apply(reference);
+        return responseFactory.apply(template, reference);
     }
 
     private static Response serverError() {

@@ -51,6 +51,8 @@ options can be specified:
    version of the file can be served.
  * ```timeToLiveMinutes``` - how long must be a task preserved after it has
    been finished.
+ * ```postResponseRedirectUrl``` - optional URL template. If provided and 
+   user POST a new task the response is redirect to this URL.
 
 For more information see [TaskTemplate.java](./task-runner-storage/src/main/java/cz/skodape/taskrunner/storage/template/model/TaskTemplate.java).
 
