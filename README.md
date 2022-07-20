@@ -1,3 +1,6 @@
+# Deprecated
+This repository is no longer maintained.
+
 # Task Runner
 [![Maintainability](https://api.codeclimate.com/v1/badges/7e8ac60fa925731d15f2/maintainability)](https://codeclimate.com/github/skodapetr/task-runner/maintainability)
 
